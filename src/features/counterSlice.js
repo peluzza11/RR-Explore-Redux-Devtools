@@ -1,25 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    value: 0
+    items: []
 }
 
-export const counterSlice = createSlice({
-    name: 'counter',
+export const todoSlice = createSlice({
+    name: 'todos',
     initialState,
     reducers: {
-        increment: (state) => {
-            return { value: state.value + 1 }
+        addTodo: (state, action) => {
+            return { items: [...state.items, action.payload]}
         },
-        decrement: (state) => {
-            return { value: state.value - 1 }
+        removeOne: (state, action) => {
+            console.log(action)
+            let array = [...state.items]
+            let index = action.payload
+            if(index !== -1) {
+                array.splice(index, 1)
+                return { items: array }
+            }
         },
-        incrementByAmount: (state, action) => {
-            return { value: state.value + action.payload }
+        clearTodo: () => {
+            return { items: [] }
         }
     }
 })
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { addTodo, removeOne, clearTodo } = todoSlice.actions
 
-export default counterSlice.reducer
+export default todoSlice.reducer
